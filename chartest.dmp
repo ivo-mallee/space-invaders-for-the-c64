@@ -1,0 +1,91 @@
+00001  0000             ; 10 SYS (4096)
+00002  0001             
+00003  0001             *=$0801
+00004  0801             
+00005  0801  0E 08 0A              BYTE    $0E, $08, $0A, $00, $9E, $20, $28,  $34, $30, $39, $36, $29, $00, $00, $00
+00006  0810             
+00007  0810             *=$1000
+00008  1000             
+00009  1000             MAIN
+00010  1000  A9 00                 LDA #0
+00011  1002  8D 00 60              STA $6000 ;PLAYER X
+00012  1005  8D 01 60              STA $6001 ; BULLETX
+00013  1008             
+00014  1008             
+00015  1008             
+00016  1008             
+00017  1008             
+00018  1008             
+00019  1008             
+00020  1008             START
+00021  1008  A9 01                 LDA #%0000001 ;LOAD A BITMASK NUMBER IN THE ACCUMALTOR
+00022  100A  2C 00 DC              BIT $DC00 ;CHECK FOR BIT 0
+00023  100D  F0 27                 BEQ UP ;IF SO GO TO UP
+00024  100F  A9 02                 LDA #%0000010 ;LOAD A BITMASK NUMBER IN THE ACCUMALTOR
+00025  1011  2C 00 DC              BIT $DC00 ;CHECK FOR BIT 1
+00026  1014  F0 28                 BEQ DOWN ;IF SO GO TO DOWN
+00027  1016  A9 04                 LDA #%0000100 ;LOAD A BITMASK NUMBER IN THE ACCUMALTOR
+00028  1018  2C 00 DC              BIT $DC00 ;CHECK FOR BIT 2
+00029  101B  F0 29                 BEQ LEFT ;IF SO GO TO LEFT
+00030  101D  A9 08                 LDA #%0001000 ;LOAD A BITMASK NUMBER IN THE ACCUMALTOR
+00031  101F  2C 00 DC              BIT $DC00 ;CHECK FOR BIT 3
+00032  1022  F0 28                 BEQ RIGHT ;IF SO GO TO RIGHT
+00033  1024  A9 10                 LDA #%0010000 ;LOAD A BITMASK NUMBER IN THE ACCUMALTOR
+00034  1026  2C 00 DC              BIT $DC00 ;CHECK FOR BIT 4
+00035  1029  F0 27                 BEQ FIRE ;IF SO GO TO FIRE
+00036  102B  A9 51                 LDA #81  ;STORE BALLCHARRECTER IN ACCUMALTOR
+00037  102D  AE 00 60              LDX $6000 ;STORE THE PLAYER X IN THE X REGISTER
+00038  1030  9D C0 07              STA 1984,X ;WRITE THIS TO THE SCREEN USING THE X REGISTER AS AN OFFSET
+00039  1033  4C 08 10              JMP START  ;LOOP BACK UP
+00040  1036             
+00041  1036             
+00042  1036             
+00043  1036             
+00044  1036             
+00045  1036             
+00046  1036             
+00047  1036             
+00048  1036             
+00049  1036             
+00050  1036             
+00051  1036             
+00052  1036             UP
+00053  1036  A9 15                 LDA #21 ;LOAD A INTO ACCUMALTOR
+00054  1038  8D 00 04              STA 1024 ;WRITE THIS TO THE FIRTSCREEN POSITION
+00055  103B  4C 08 10              JMP START ;GO BACK TO MAIN
+00056  103E             DOWN       
+00057  103E  A9 04                 LDA #4 ;LOAD D INTO ACCUMALTOR
+00058  1040  8D 00 04              STA 1024 ;WRITE THIS TO THE FIRTSCREEN POSITION
+00059  1043  4C 08 10              JMP START ;GO BACK TO MAIN
+00060  1046             LEFT
+00061  1046  EE 00 60              INC $6000
+00062  1049  4C 08 10              JMP START ;GO BACK TO MAIN
+00063  104C             RIGHT
+00064  104C  CE 00 60              DEC $6000
+00065  104F  4C 08 10              JMP START ;GO BACK TO MAIN
+00066  1052             FIRE
+00067  1052  A9 56                 LDA #86 ;LOAD CROSS INTO ACCUMALTOR
+00068  1054  8D 00 04              STA 1024 ;WRITE THIS TO THE FIRTSCREEN POSITION
+00069  1057  4C 08 10              JMP START ;GO BACK TO MAIN
+00070  105A             
+00071  105A             
+00072  105A             
+00073  105A             
+
+******* 7 Label(s) *******
+down = $103E 
+fire = $1052 
+left = $1046 
+Main = $1000 
+right = $104C 
+start = $1008 
+up = $1036 
+
+******* 1 Unused label(s) *******
+Main
+
+******* 1 Variable(s) *******
+tgt_c64  = $0001
+******* 1 Unused variables(s) *******
+tgt_c64
+
