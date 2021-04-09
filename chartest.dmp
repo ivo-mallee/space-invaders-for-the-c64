@@ -10,76 +10,95 @@
 00010  1000  A9 00                 LDA #0
 00011  1002  8D 00 60              STA $6000 ;PLAYER X
 00012  1005  8D 01 60              STA $6001 ; BULLETX
-00013  1008             
-00014  1008             
-00015  1008             
-00016  1008             
-00017  1008             
-00018  1008             
-00019  1008             
-00020  1008             START
-00021  1008  A9 01                 LDA #%0000001 ;LOAD A BITMASK NUMBER IN THE ACCUMALTOR
-00022  100A  2C 00 DC              BIT $DC00 ;CHECK FOR BIT 0
-00023  100D  F0 27                 BEQ UP ;IF SO GO TO UP
-00024  100F  A9 02                 LDA #%0000010 ;LOAD A BITMASK NUMBER IN THE ACCUMALTOR
-00025  1011  2C 00 DC              BIT $DC00 ;CHECK FOR BIT 1
-00026  1014  F0 28                 BEQ DOWN ;IF SO GO TO DOWN
-00027  1016  A9 04                 LDA #%0000100 ;LOAD A BITMASK NUMBER IN THE ACCUMALTOR
-00028  1018  2C 00 DC              BIT $DC00 ;CHECK FOR BIT 2
-00029  101B  F0 29                 BEQ LEFT ;IF SO GO TO LEFT
-00030  101D  A9 08                 LDA #%0001000 ;LOAD A BITMASK NUMBER IN THE ACCUMALTOR
-00031  101F  2C 00 DC              BIT $DC00 ;CHECK FOR BIT 3
-00032  1022  F0 28                 BEQ RIGHT ;IF SO GO TO RIGHT
-00033  1024  A9 10                 LDA #%0010000 ;LOAD A BITMASK NUMBER IN THE ACCUMALTOR
-00034  1026  2C 00 DC              BIT $DC00 ;CHECK FOR BIT 4
-00035  1029  F0 27                 BEQ FIRE ;IF SO GO TO FIRE
-00036  102B  A9 51                 LDA #81  ;STORE BALLCHARRECTER IN ACCUMALTOR
-00037  102D  AE 00 60              LDX $6000 ;STORE THE PLAYER X IN THE X REGISTER
-00038  1030  9D C0 07              STA 1984,X ;WRITE THIS TO THE SCREEN USING THE X REGISTER AS AN OFFSET
-00039  1033  4C 08 10              JMP START  ;LOOP BACK UP
-00040  1036             
-00041  1036             
-00042  1036             
-00043  1036             
-00044  1036             
-00045  1036             
-00046  1036             
-00047  1036             
-00048  1036             
-00049  1036             
-00050  1036             
-00051  1036             
-00052  1036             UP
-00053  1036  A9 15                 LDA #21 ;LOAD A INTO ACCUMALTOR
-00054  1038  8D 00 04              STA 1024 ;WRITE THIS TO THE FIRTSCREEN POSITION
-00055  103B  4C 08 10              JMP START ;GO BACK TO MAIN
-00056  103E             DOWN       
-00057  103E  A9 04                 LDA #4 ;LOAD D INTO ACCUMALTOR
-00058  1040  8D 00 04              STA 1024 ;WRITE THIS TO THE FIRTSCREEN POSITION
-00059  1043  4C 08 10              JMP START ;GO BACK TO MAIN
-00060  1046             LEFT
-00061  1046  EE 00 60              INC $6000
-00062  1049  4C 08 10              JMP START ;GO BACK TO MAIN
-00063  104C             RIGHT
-00064  104C  CE 00 60              DEC $6000
-00065  104F  4C 08 10              JMP START ;GO BACK TO MAIN
-00066  1052             FIRE
-00067  1052  A9 56                 LDA #86 ;LOAD CROSS INTO ACCUMALTOR
-00068  1054  8D 00 04              STA 1024 ;WRITE THIS TO THE FIRTSCREEN POSITION
-00069  1057  4C 08 10              JMP START ;GO BACK TO MAIN
-00070  105A             
-00071  105A             
-00072  105A             
-00073  105A             
+00013  1008  8D 02 60              STA $6002 ;MOVEMENTTIMER
+00014  100B             
+00015  100B             
+00016  100B             
+00017  100B             
+00018  100B             
+00019  100B             
+00020  100B             START
+00021  100B                        
+00022  100B  A9 51                 LDA #81  ;STORE BALLCHARRECTER IN ACCUMALTOR
+00023  100D  AE 00 60              LDX $6000 ;STORE THE PLAYER X IN THE X REGISTER
+00024  1010  20 16 10              JSR CHECKFORINPUT
+00025  1013  4C 0B 10              JMP START  ;LOOP BACK UP
+00026  1016                        
+00027  1016             
+00028  1016             
+00029  1016             
+00030  1016             
+00031  1016             
+00032  1016             
+00033  1016             
+00034  1016             
+00035  1016             CHECKFORINPUT 
+00036  1016  A9 01                 LDA #%0000001 ;LOAD A BITMASK NUMBER IN THE ACCUMALTOR
+00037  1018  2C 00 DC              BIT $DC00 ;CHECK FOR BIT 0
+00038  101B  F0 1D                 BEQ UP ;IF SO GO TO UP
+00039  101D  A9 02                 LDA #%0000010 ;LOAD A BITMASK NUMBER IN THE ACCUMALTOR
+00040  101F  2C 00 DC              BIT $DC00 ;CHECK FOR BIT 1
+00041  1022  F0 1E                 BEQ DOWN ;IF SO GO TO DOWN
+00042  1024  A9 04                 LDA #%0000100 ;LOAD A BITMASK NUMBER IN THE ACCUMALTOR
+00043  1026  2C 00 DC              BIT $DC00 ;CHECK FOR BIT 2
+00044  1029  F0 1F                 BEQ LEFT ;IF SO GO TO LEFT
+00045  102B  A9 08                 LDA #%0001000 ;LOAD A BITMASK NUMBER IN THE ACCUMALTOR
+00046  102D  2C 00 DC              BIT $DC00 ;CHECK FOR BIT 3
+00047  1030  F0 22                 BEQ RIGHT ;IF SO GO TO RIGHT
+00048  1032  A9 10                 LDA #%0010000 ;LOAD A BITMASK NUMBER IN THE ACCUMALTOR
+00049  1034  2C 00 DC              BIT $DC00 ;CHECK FOR BIT 4
+00050  1037  F0 25                 BEQ FIRE ;IF SO GO TO FIRE
+00051  1039  60                    RTS
+00052  103A             
+00053  103A             
+00054  103A             
+00055  103A             
+00056  103A             
+00057  103A             
+00058  103A             
+00059  103A             
+00060  103A             UP
+00061  103A  A9 15                 LDA #21 ;LOAD A INTO ACCUMALTOR
+00062  103C  8D 00 04              STA 1024 ;WRITE THIS TO THE FIRTSCREEN POSITION
+00063  103F  4C 0B 10              JMP START ;GO BACK TO START
+00064  1042             DOWN       
+00065  1042  A9 04                 LDA #4 ;LOAD D INTO ACCUMALTOR
+00066  1044  8D 00 04              STA 1024 ;WRITE THIS TO THE FIRTSCREEN POSITION
+00067  1047  4C 0B 10              JMP START ;GO BACK TO START
+00068  104A             LEFT
+00069  104A  AD 02 60              LDA $6002 ;LOADS TIMER INTO REGISTER A
+00070  104D  C9 00                 CMP #0 ;CHECKS IF THIS IS AT ZERO
+00071  104F  F0 15                 BEQ MOVEPLAYER ;IF SO GO MOVE PLAYER
+00072  1051  4C 0B 10              JMP START ;GO BACK TO START
+00073  1054             RIGHT
+00074  1054  AD 02 60              LDA $6002 ;LOADS TIMER INTO REGISTER A
+00075  1057  C9 00                 CMP #0 ;CHECKS IF THIS IS AT ZERO
+00076  1059  F0 0B                 BEQ MOVEPLAYER ;IF SO MOVE PLAYER
+00077  105B  4C 0B 10              JMP START ;GO BACK TO START
+00078  105E             FIRE
+00079  105E  A9 56                 LDA #86 ;LOAD CROSS INTO ACCUMALTOR
+00080  1060  8D 00 04              STA 1024 ;WRITE THIS TO THE FIRTSCREEN POSITION
+00081  1063  4C 0B 10              JMP START ;GO BACK TO START
+00082  1066             MOVEPLAYER 
+00083  1066  EE 00 60              INC $6000
+00084  1069  EE 21 D0              INC $D021
+00085  106C  A9 37                 LDA #55
+00086  106E  8D 00 04              STA 1024
+00087  1071  4C 0B 10              JMP START
+00088  1074             
+00089  1074             
+00090  1074             
 
-******* 7 Label(s) *******
-down = $103E 
-fire = $1052 
-left = $1046 
+******* 9 Label(s) *******
+checkforinput = $1016 
+down = $1042 
+fire = $105E 
+left = $104A 
 Main = $1000 
-right = $104C 
-start = $1008 
-up = $1036 
+moveplayer = $1066 
+right = $1054 
+start = $100B 
+up = $103A 
 
 ******* 1 Unused label(s) *******
 Main

@@ -18,6 +18,21 @@ Main
 
 
 start
+       
+        lda #81  ;store ballcharrecter in accumaltor
+        ldx $6000 ;store the player X in the X register
+        jsr checkforinput
+        jmp start  ;loop back up    
+        
+
+
+
+
+
+
+
+
+checkforinput
         lda #%0000001 ;load a bitmask number in the accumaltor
         bit $DC00 ;check for bit 0
         beq up ;if so go to up
@@ -33,14 +48,7 @@ start
         lda #%0010000 ;load a bitmask number in the accumaltor
         bit $DC00 ;check for bit 4
         beq fire ;if so go to fire
-        lda #81  ;store ballcharrecter in accumaltor
-        ldx $6000 ;store the player X in the X register
-        sta 1984,x ;write this to the screen using the X register as an offset
-        jmp start  ;loop back up    
-
-
-
-
+        rts
 
 
 
@@ -52,22 +60,30 @@ start
 up
         lda #21 ;load A into accumaltor
         sta 1024 ;write this to the firtscreen position
-        jmp start ;go back to Main
+        jmp start ;go back to start
 down 
         lda #4 ;load D into accumaltor
         sta 1024 ;write this to the firtscreen position
-        jmp start ;go back to Main
+        jmp start ;go back to start
 left
-        inc $6000
-        jmp start ;go back to Main
+        lda $6002 ;loads timer into register A
+        cmp #0 ;checks if this is at zero
+        beq moveplayer ;if so go move player
+        jmp start ;go back to start
 right
-        dec $6000
-        jmp start ;go back to Main
+        lda $6002 ;loads timer into register A
+        cmp #0 ;checks if this is at zero
+        beq moveplayer ;if so move player
+        jmp start ;go back to start
 fire
         lda #86 ;load cross into accumaltor
         sta 1024 ;write this to the firtscreen position
-        jmp start ;go back to Main
+        jmp start ;go back to start
 moveplayer
         inc $6000
+        inc $D021
+        lda #55
+        sta 1024
+        jmp start
 
 
